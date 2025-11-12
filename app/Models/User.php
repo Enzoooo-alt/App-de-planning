@@ -45,4 +45,45 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Relations
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_role');
+    }
+
+    public function plannings()
+    {
+        return $this->belongsToMany(Planning::class, 'user_planning')->withPivot('registration_date', 'status')->withTimestamps();
+    }
+
+    public function competitions()
+    {
+        return $this->belongsToMany(Competition::class, 'user_competition')->withPivot('registration_date', 'status')->withTimestamps();
+    }
+
+    public function trainings()
+    {
+        return $this->hasMany(Training::class, 'created_by');
+    }
+
+    /**
+     * Helper methods
+     */
+    public function hasRole($roleName)
+    {
+        return $this->roles()->where('name', $roleName)->exists();
+    }
+
+    public function isCoach()
+    {
+        return $this->hasRole('coach');
+    }
+
+    public function isResponsable()
+    {
+        return $this->hasRole('responsable');
+    }
 }
