@@ -30,21 +30,34 @@ class PlanningController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'date' => 'required|date',
-            'day' => 'required|string|max:20',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
-            'coach1' => 'required|string|max:255',
-            'coach2' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'max_participants' => 'required|integer|min:1|max:50'
-        ]);
+        \Log::info('PlanningController store called', ['data' => $request->all()]);
+        
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'date' => 'required|date',
+                'day' => 'required|string|max:20',
+                'start_time' => 'required|date_format:H:i',
+                'end_time' => 'required|date_format:H:i|after:start_time',
+                'coach1' => 'required|string|max:255',
+                'coach2' => 'nullable|string|max:255',
+                'description' => 'nullable|string',
+                'max_participants' => 'required|integer|min:1|max:50'
+            ]);
+            
+            \Log::info('Planning validation passed', ['validated' => $validated]);
 
-        Planning::create($validated);
+            $planning = Planning::create($validated);
+            
+            \Log::info('Planning created', ['planning_id' => $planning->id]);
 
-        return redirect()->route('plannings.index')
-            ->with('success', 'Planning créé avec succès.');
+            return redirect()->route('plannings.index')
+                ->with('success', 'Planning créé avec succès.');
+                
+        } catch (\Exception $e) {
+            \Log::error('Error creating planning', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return back()->withInput()->withErrors(['error' => 'Erreur lors de la création: ' . $e->getMessage()]);
+        }
     }
 
     /**
@@ -127,5 +140,21 @@ class PlanningController extends Controller
         $planning->users()->detach($user->id);
 
         return back()->with('success', 'Désinscription réussie !');
+    }
+
+    /**
+     * Subscribe user to a planning session (alias for register)
+     */
+    public function subscribe(Planning $planning)
+    {
+        return $this->register($planning);
+    }
+
+    /**
+     * Unsubscribe user from a planning session (alias for unregister)
+     */
+    public function unsubscribe(Planning $planning)
+    {
+        return $this->unregister($planning);
     }
 }

@@ -9,8 +9,10 @@ class Training extends Model
     protected $fillable = [
         'title',
         'description',
+        'type',
+        'niveau',
+        'duree_minutes',
         'pdf_path',
-        'category',
         'created_by',
     ];
 
@@ -20,5 +22,10 @@ class Training extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function plannings()
+    {
+        return $this->belongsToMany(Planning::class);
     }
 }

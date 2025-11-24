@@ -1,0 +1,568 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 🌙 Mode sombre époustouflant */
+.dark {
+  --background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+  --foreground: #ffffff;
+  --card: rgba(255, 255, 255, 0.05);
+  --card-foreground: #ffffff;
+  --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary: rgba(255, 255, 255, 0.05);
+  --muted: rgba(255, 255, 255, 0.05);
+  --accent: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+  --destructive: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+}
+
+:root {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* 🎨 Styles de base révolutionnaires */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: var(--font-size);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* 🌊 Animation de fond aquatique */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+    animation: floating 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  @keyframes floating {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-30px) rotate(1deg); }
+    66% { transform: translateY(30px) rotate(-1deg); }
+  }
+}
+
+/* 🎯 Navigation époustouflante */
+nav {
+  background: var(--ocean-gradient) !important;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+nav a {
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+nav a:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* 🎨 Cartes magiques */
+.card-magic {
+  background: var(--card) !important;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-2xl);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.card-magic::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(79, 172, 254, 0.1), transparent);
+  transform: translateX(-100%) translateY(-100%);
+  transition: transform var(--transition-slow);
+}
+
+.card-magic:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-glow-intense);
+}
+
+.card-magic:hover::before {
+  transform: translateX(100%) translateY(100%);
+}
+
+/* 🚀 Boutons extraordinaires */
+.btn-primary {
+  background: var(--primary) !important;
+  border: none !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  color: white !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transition: all var(--transition-bounce) !important;
+  box-shadow: var(--shadow-lg) !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--transition-normal);
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* 🎨 Boutons colorés spéciaux */
+.btn-success {
+  background: var(--success) !important;
+  color: white !important;
+}
+
+.btn-warning {
+  background: var(--warning) !important;
+  color: white !important;
+}
+
+.btn-danger {
+  background: var(--destructive) !important;
+  color: white !important;
+}
+
+.btn-secondary {
+  background: var(--secondary) !important;
+  color: var(--secondary-foreground) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 🎨 Styles pour les badges avec animations */
+.badge-purple { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; color: white !important; }
+.badge-green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important; color: white !important; }
+.badge-yellow { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important; color: white !important; }
+.badge-gray { background: rgba(255, 255, 255, 0.2) !important; color: white !important; }
+.badge-red { background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%) !important; color: white !important; }
+
+/* 🌟 Messages d'alerte stylisés */
+.alert {
+  border-radius: var(--radius-lg) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  animation: slideInDown 0.5s ease-out !important;
+}
+
+.alert-success {
+  background: linear-gradient(135deg, rgba(17, 153, 142, 0.9) 0%, rgba(56, 239, 125, 0.9) 100%) !important;
+  color: white !important;
+}
+
+.alert-error {
+  background: linear-gradient(135deg, rgba(255, 65, 108, 0.9) 0%, rgba(255, 75, 43, 0.9) 100%) !important;
+  color: white !important;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 🎯 Tables élégantes */
+.table-magic {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.table-magic tr:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: scale(1.01) !important;
+  transition: all var(--transition-normal) !important;
+}
+
+/* 🌊 Particules flottantes d'arrière-plan */
+.floating-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(79, 172, 254, 0.1);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.particle:nth-child(1) { width: 20px; height: 20px; top: 20%; left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { width: 30px; height: 30px; top: 60%; left: 70%; animation-delay: 2s; }
+.particle:nth-child(3) { width: 15px; height: 15px; top: 80%; left: 20%; animation-delay: 4s; }
+.particle:nth-child(4) { width: 25px; height: 25px; top: 40%; left: 80%; animation-delay: 1s; }
+.particle:nth-child(5) { width: 18px; height: 18px; top: 10%; left: 60%; animation-delay: 3s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+  50% { transform: translateY(-30px) rotate(180deg); opacity: 0.8; }
+}
+
+/* 📝 Champs de saisie futuristes */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+select,
+textarea {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 12px 16px !important;
+  color: var(--foreground) !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  transition: all var(--transition-normal) !important;
+  backdrop-filter: blur(10px) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none !important;
+  border-color: rgba(79, 172, 254, 0.8) !important;
+  box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.1) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 🏷️ Labels stylisés */
+label {
+  font-weight: 600 !important;
+  color: var(--foreground) !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+  font-size: 14px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* 🎯 Badges magnifiques */
+.badge {
+  padding: 6px 12px !important;
+  border-radius: var(--radius-md) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  animation: badge-shine 3s infinite;
+}
+
+@keyframes badge-shine {
+  100% { transform: translateX(100%); }
+}
+
+/* 📊 Barres de progression liquides */
+.progress-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--wave-gradient);
+  border-radius: var(--radius-md);
+  position: relative;
+  transition: width var(--transition-slow);
+}
+
+.progress-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: wave-flow 2s infinite;
+}
+
+@keyframes wave-flow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 🎪 Animations d'apparition */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 🎨 Classes utilitaires pour les animations */
+.animate-fade-in-up {
+  animation: fadeInUp var(--transition-slow) ease-out;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft var(--transition-slow) ease-out;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight var(--transition-slow) ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--transition-slow) ease-out;
+}
+
+.animate-delay-1 { animation-delay: 0.1s; }
+.animate-delay-2 { animation-delay: 0.2s; }
+.animate-delay-3 { animation-delay: 0.3s; }
+.animate-delay-4 { animation-delay: 0.4s; }
+
+/* 🌟 Effet de brillance globale */
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-effect::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: rotate(45deg) translateX(-100%);
+  animation: shine 4s infinite;
+}
+
+@keyframes shine {
+  0% { transform: rotate(45deg) translateX(-100%); }
+  50% { transform: rotate(45deg) translateX(100%); }
+  100% { transform: rotate(45deg) translateX(100%); }
+}
+
+/* 🎭 Responsive et mobile-first */
+@media (max-width: 768px) {
+  .card-magic {
+    margin: 10px;
+    border-radius: var(--radius-lg);
+  }
+  
+  .btn-primary {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* 🏊‍♂️ Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--wave-gradient);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ocean-gradient);
+}
+
+/* 🎨 Sélection de texte stylisée */
+::selection {
+  background: rgba(79, 172, 254, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background: rgba(79, 172, 254, 0.3);
+  color: white;
+}

@@ -32,25 +32,45 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'roles' => 'required|array|min:1',
-            'roles.*' => 'exists:roles,id'
-        ]);
+        \Log::info('UserController store called', ['data' => $request->all()]);
+        
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'phone' => 'nullable|string|max:20',
+                'birth_date' => 'nullable|date',
+                'address' => 'nullable|string|max:500',
+                'roles' => 'required|array|min:1',
+                'roles.*' => 'exists:roles,id'
+            ]);
+            
+            \Log::info('Validation passed', ['validated' => $validated]);
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'email_verified_at' => now(),
-        ]);
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+                'phone' => $validated['phone'] ?? null,
+                'birth_date' => $validated['birth_date'] ?? null,
+                'address' => $validated['address'] ?? null,
+                'email_verified_at' => now(),
+            ]);
 
-        $user->roles()->attach($validated['roles']);
+            \Log::info('User created', ['user_id' => $user->id]);
 
-        return redirect()->route('users.index')
-            ->with('success', 'Utilisateur créé avec succès.');
+            $user->roles()->attach($validated['roles']);
+            
+            \Log::info('Roles attached', ['roles' => $validated['roles']]);
+
+            return redirect()->route('users.index')
+                ->with('success', 'Utilisateur créé avec succès.');
+                
+        } catch (\Exception $e) {
+            \Log::error('Error creating user', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return back()->withInput()->withErrors(['error' => 'Erreur lors de la création: ' . $e->getMessage()]);
+        }
     }
 
     /**

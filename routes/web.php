@@ -1,34 +1,53 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\TrainingController;
-use App\Http\Controllers\MaterialController;
-use App\Http\Controllers\CompetitionController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
+// Redirection vers login pour les visiteurs non authentifiés
 Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
+});
 
-// Routes pour les utilisateurs (adhérents)
-Route::resource('users', UserController::class);
+// Routes d'authentification
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login')->middleware('guest');
+Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register')->middleware('guest');
+Route::post('/register', [AuthController::class, 'register'])->middleware('guest');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-// Routes pour les plannings
-Route::resource('plannings', PlanningController::class);
-Route::post('plannings/{planning}/register', [PlanningController::class, 'register'])->name('plannings.register');
-Route::delete('plannings/{planning}/unregister', [PlanningController::class, 'unregister'])->name('plannings.unregister');
 
-// Routes pour les entraînements PDF
-Route::resource('trainings', TrainingController::class);
-Route::get('trainings/{training}/download', [TrainingController::class, 'download'])->name('trainings.download');
 
-// Routes pour le matériel
-Route::resource('materials', MaterialController::class);
-Route::post('materials/{material}/borrow', [MaterialController::class, 'borrow'])->name('materials.borrow');
-Route::post('materials/{material}/return', [MaterialController::class, 'returnItem'])->name('materials.return');
+// Routes protégées par authentification
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// Routes pour les compétitions
-Route::resource('competitions', CompetitionController::class);
-Route::post('competitions/{competition}/register', [CompetitionController::class, 'register'])->name('competitions.register');
-Route::delete('competitions/{competition}/unregister', [CompetitionController::class, 'unregister'])->name('competitions.unregister');
+    // Route pour récupérer un nouveau token CSRF
+    Route::get('/csrf-token', function () {
+        return response()->json(['csrf_token' => csrf_token()]);
+    });
+
+    // Routes pour les utilisateurs (adhérents)
+    Route::resource('users', UserController::class);
+
+    // Routes pour les plannings
+    Route::resource('plannings', PlanningController::class);
+    Route::post('plannings/{planning}/subscribe', [PlanningController::class, 'subscribe'])->name('plannings.subscribe');
+    Route::delete('plannings/{planning}/unsubscribe', [PlanningController::class, 'unsubscribe'])->name('plannings.unsubscribe');
+
+    // Route de profil
+    Route::get('/profile', function() {
+        return redirect()->route('users.show', auth()->id());
+    })->name('profile.show');
+
+    // Routes pour les entraînements
+    Route::resource('trainings', TrainingController::class);
+    Route::get('trainings/{training}/download-pdf', [TrainingController::class, 'downloadPdf'])->name('trainings.download-pdf');
+});

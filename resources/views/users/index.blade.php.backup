@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adhérents - Lyon Palme</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="{{ route('dashboard') }}" class="text-xl font-bold">🏊‍♂️ Lyon Palme</a>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="{{ route('dashboard') }}" class="border-transparent text-blue-100 hover:border-gray-300 hover:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="{{ route('users.index') }}" class="border-indigo-500 text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Adhérents
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Particules flottantes magiques -->
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-gray-900">Gestion des Adhérents</h1>
+                <a href="{{ route('users.create') }}" class="btn-primary">
+                    🌊 Nouvel adhérent
+                </a>
+            </div>
+
+            @if(session('success'))
+                <div class="alert alert-success px-6 py-4 mb-6 shine-effect">
+                    🎉 {{ session('success') }}
+                </div>
+            @endif
+
+            <div class="card-magic table-magic animate-fade-in-up">
+                @if($users->count() > 0)
+                    <ul class="divide-y divide-gray-200">
+                        @foreach($users as $user)
+                            <li class="px-6 py-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-12 w-12">
+                                            <div class="h-12 w-12 rounded-full bg-blue-500 flex items-center justify-center">
+                                                <span class="text-lg font-medium text-white">
+                                                    {{ strtoupper(substr($user->name, 0, 2)) }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-lg font-medium text-gray-900">{{ $user->name }}</div>
+                                            <div class="text-sm text-gray-500">{{ $user->email }}</div>
+                                            <div class="flex space-x-2 mt-1">
+                                                @foreach($user->roles as $role)
+                                                    <span class="badge 
+                                                        @if($role->name === 'admin') badge-purple
+                                                        @elseif($role->name === 'coach') badge-green
+                                                        @elseif($role->name === 'responsable') badge-yellow
+                                                        @else badge-gray @endif">
+                                                        {{ ucfirst($role->name) }}
+                                                    </span>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <a href="{{ route('users.show', $user) }}" class="btn-secondary text-xs px-3 py-1">
+                                            👁️ Voir
+                                        </a>
+                                        <a href="{{ route('users.edit', $user) }}" class="btn-warning text-xs px-3 py-1">
+                                            ✏️ Modifier
+                                        </a>
+                                        @if($user->id !== 1) {{-- Ne pas permettre la suppression de l'admin --}}
+                                            <form action="{{ route('users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('🗑️ Êtes-vous sûr de vouloir supprimer cet adhérent ?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-danger text-xs px-3 py-1">
+                                                    🗑️ Supprimer
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <div class="text-center py-12">
+                        <p class="text-gray-500 text-lg">Aucun adhérent inscrit.</p>
+                        <a href="{{ route('users.create') }}" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Ajouter le premier adhérent
+                        </a>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Statistiques rapides magiques -->
+            <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-3">
+                <div class="card-magic animate-fade-in-left animate-delay-1 shine-effect">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="text-4xl mb-2">👥</div>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <h3 class="text-sm font-bold text-gray-600 uppercase tracking-wider">Total Adhérents</h3>
+                                <p class="text-3xl font-bold text-blue-600 mt-2">{{ $users->count() }}</p>
+                                <div class="progress-bar mt-3">
+                                    <div class="progress-fill" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-magic animate-fade-in-up animate-delay-2 shine-effect">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="text-4xl mb-2">🏊‍♂️</div>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <h3 class="text-sm font-bold text-gray-600 uppercase tracking-wider">Coachs Experts</h3>
+                                <p class="text-3xl font-bold text-green-600 mt-2">
+                                    {{ $users->filter(function($user) { return $user->hasRole('coach'); })->count() }}
+                                </p>
+                                <div class="progress-bar mt-3">
+                                    <div class="progress-fill" style="width: 75%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-magic animate-fade-in-right animate-delay-3 shine-effect">
+                    <div class="p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="text-4xl mb-2">🎯</div>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <h3 class="text-sm font-bold text-gray-600 uppercase tracking-wider">Responsables</h3>
+                                <p class="text-3xl font-bold text-purple-600 mt-2">
+                                    {{ $users->filter(function($user) { return $user->hasRole('responsable'); })->count() }}
+                                </p>
+                                <div class="progress-bar mt-3">
+                                    <div class="progress-fill" style="width: 60%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

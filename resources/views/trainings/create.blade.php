@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Créer un Planning - Lyon Palme</title>
+    <title>Créer un Entraînement - Lyon Palme</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100">
@@ -19,32 +18,18 @@
                 <a href="{{ route('plannings.index') }}" class="hover:text-blue-200">Plannings</a>
                 <a href="{{ route('trainings.index') }}" class="hover:text-blue-200">Entraînements</a>
                 <a href="{{ route('users.index') }}" class="hover:text-blue-200">Utilisateurs</a>
-                <div class="flex items-center space-x-4 ml-6">
-                    <span class="text-blue-200">{{ Auth::user()->name }}</span>
-                    <form method="POST" action="{{ route('logout') }}" class="inline">
-                        @csrf
-                        <button type="submit" class="text-blue-200 hover:text-white">Déconnexion</button>
-                    </form>
-                </div>
             </div>
         </div>
     </nav>
 
     <main class="max-w-2xl mx-auto px-4 py-8">
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Créer un Planning</h1>
-            <p class="text-gray-600">Planifiez une nouvelle séance d'entraînement</p>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Créer un Entraînement</h1>
+            <p class="text-gray-600">Ajoutez un nouvel exercice à la bibliothèque</p>
         </div>
 
-        @if(session('error') || (isset($errors) && $errors->has('token')))
-            <div class="alert alert-error mb-6">
-                <strong>Erreur de sécurité :</strong> Votre session a expiré. Veuillez actualiser la page et réessayer.
-                <button onclick="window.location.reload()" class="underline ml-2">Actualiser</button>
-            </div>
-        @endif
-
-        @if($errors->any() && !$errors->has('token'))
-            <div class="alert alert-error mb-6">
+        @if($errors->any())
+            <div class="alert alert-error">
                 <ul class="list-disc list-inside">
                     @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -54,13 +39,13 @@
         @endif
 
         <div class="card">
-            <form action="{{ route('plannings.store') }}" method="POST">
+            <form action="{{ route('trainings.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="grid grid-cols-1 gap-6">
                     <!-- Titre -->
                     <div>
-                        <label for="title" class="form-label">Titre de la séance</label>
+                        <label for="title" class="form-label">Titre de l'entraînement</label>
                         <input type="text" id="title" name="title" class="form-input" 
                                value="{{ old('title') }}" required>
                     </div>
@@ -68,7 +53,7 @@
                     <!-- Type et Niveau -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="type" class="form-label">Type de séance</label>
+                            <label for="type" class="form-label">Type</label>
                             <select id="type" name="type" class="form-input" required>
                                 <option value="">Sélectionner</option>
                                 <option value="technique" {{ old('type') === 'technique' ? 'selected' : '' }}>Technique</option>
@@ -90,44 +75,47 @@
                         </div>
                     </div>
 
-                    <!-- Date et Heures -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" id="date" name="date" class="form-input" 
-                                   value="{{ old('date') }}" required>
-                        </div>
-
-                        <div>
-                            <label for="heure_debut" class="form-label">Heure de début</label>
-                            <input type="time" id="heure_debut" name="heure_debut" class="form-input" 
-                                   value="{{ old('heure_debut') }}" required>
-                        </div>
-
-                        <div>
-                            <label for="heure_fin" class="form-label">Heure de fin</label>
-                            <input type="time" id="heure_fin" name="heure_fin" class="form-input" 
-                                   value="{{ old('heure_fin') }}" required>
-                        </div>
-                    </div>
-
-                    <!-- Lieu -->
+                    <!-- Durée -->
                     <div>
-                        <label for="lieu" class="form-label">Lieu</label>
-                        <input type="text" id="lieu" name="lieu" class="form-input" 
-                               value="{{ old('lieu', 'Piscine Lyon Palme') }}" required>
+                        <label for="duree_minutes" class="form-label">Durée (minutes)</label>
+                        <input type="number" id="duree_minutes" name="duree_minutes" class="form-input" 
+                               value="{{ old('duree_minutes') }}" min="15" max="300" required>
                     </div>
 
                     <!-- Description -->
                     <div>
-                        <label for="description" class="form-label">Description (optionnel)</label>
-                        <textarea id="description" name="description" rows="4" class="form-input">{{ old('description') }}</textarea>
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" name="description" rows="6" class="form-input">{{ old('description') }}</textarea>
                     </div>
+
+                    <!-- Fichier PDF -->
+                    <div>
+                        <label for="pdf_file" class="form-label">Fichier PDF (optionnel)</label>
+                        <input type="file" id="pdf_file" name="pdf_file" class="form-input" accept=".pdf">
+                        <p class="text-sm text-gray-600 mt-1">Taille maximale: 10 MB</p>
+                    </div>
+
+                    <!-- Plannings associés -->
+                    @if($plannings->count() > 0)
+                        <div>
+                            <label class="form-label">Plannings associés (optionnel)</label>
+                            <div class="space-y-2 max-h-40 overflow-y-auto">
+                                @foreach($plannings as $planning)
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="planning_ids[]" value="{{ $planning->id }}" 
+                                               class="rounded border-gray-300 mr-2"
+                                               {{ in_array($planning->id, old('planning_ids', [])) ? 'checked' : '' }}>
+                                        <span class="text-sm">{{ $planning->title }} - {{ $planning->date->format('d/m/Y') }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
 
                     <!-- Boutons -->
                     <div class="flex items-center space-x-4 pt-4">
-                        <button type="submit" class="btn btn-primary">Créer le Planning</button>
-                        <a href="{{ route('plannings.index') }}" class="btn btn-secondary">Annuler</a>
+                        <button type="submit" class="btn btn-primary">Créer l'Entraînement</button>
+                        <a href="{{ route('trainings.index') }}" class="btn btn-secondary">Annuler</a>
                     </div>
                 </div>
             </form>

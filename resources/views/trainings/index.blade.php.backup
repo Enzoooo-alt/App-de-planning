@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏊‍♂️ Entraînements - Lyon Palme</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="min-h-screen animated-gradient">
+    <!-- 🌊 Particles d'arrière-plan magiques -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="particles">
+            @for($i = 0; $i < 50; $i++)
+                <div class="particle" style="left: {{ rand(0, 100) }}%; animation-delay: {{ rand(0, 3000) }}ms;"></div>
+            @endfor
+        </div>
+    </div>
+
+    <!-- 🚀 Navigation supérieure -->
+    <nav class="glass-effect sticky top-0 z-50 backdrop-blur-lg border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 hover-lift">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center shadow-glow">
+                            <span class="text-white font-bold text-lg">🏊‍♂️</span>
+                        </div>
+                        <span class="text-white font-bold text-xl">Lyon Palme</span>
+                    </a>
+                    <span class="text-white/70">→</span>
+                    <span class="text-white font-medium">Entraînements</span>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="{{ route('trainings.create') }}" class="btn-primary">
+                        ✨ Nouvel Entraînement
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="btn-secondary">
+                        🏠 Tableau de Bord
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 🎨 En-tête avec statistiques -->
+        <div class="mb-8">
+            <div class="text-center mb-6">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
+                    🏊‍♂️ Bibliothèque d'Entraînements
+                </h1>
+                <p class="text-xl text-white/80 max-w-2xl mx-auto animate-slide-up">
+                    Découvrez notre collection d'entraînements personnalisés pour tous les niveaux
+                </p>
+            </div>
+
+            <!-- Statistiques rapides -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="stat-card bg-gradient-to-r from-blue-500 to-cyan-500">
+                    <div class="stat-number">{{ $trainings->total() }}</div>
+                    <div class="stat-label">🏊‍♂️ Total Entraînements</div>
+                </div>
+                <div class="stat-card bg-gradient-to-r from-green-500 to-emerald-500">
+                    <div class="stat-number">{{ $trainings->where('type', 'technique')->count() }}</div>
+                    <div class="stat-label">🎯 Technique</div>
+                </div>
+                <div class="stat-card bg-gradient-to-r from-purple-500 to-pink-500">
+                    <div class="stat-number">{{ $trainings->where('type', 'endurance')->count() }}</div>
+                    <div class="stat-label">💪 Endurance</div>
+                </div>
+                <div class="stat-card bg-gradient-to-r from-orange-500 to-red-500">
+                    <div class="stat-number">{{ $trainings->where('type', 'vitesse')->count() }}</div>
+                    <div class="stat-label">⚡ Vitesse</div>
+                </div>
+            </div>
+        </div>
+
+        @if(session('success'))
+            <div class="success-alert mb-6">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <!-- 🔍 Filtres et recherche -->
+        <div class="glass-card p-6 mb-8">
+            <div class="flex flex-wrap gap-4 items-center justify-between">
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-white/80 font-medium">Filtrer par type:</span>
+                    <button class="filter-pill active" data-filter="all">Tous</button>
+                    <button class="filter-pill" data-filter="technique">🎯 Technique</button>
+                    <button class="filter-pill" data-filter="endurance">💪 Endurance</button>
+                    <button class="filter-pill" data-filter="vitesse">⚡ Vitesse</button>
+                    <button class="filter-pill" data-filter="competition">🏆 Compétition</button>
+                </div>
+                <div class="flex gap-2">
+                    <span class="text-white/80 font-medium">Niveau:</span>
+                    <button class="filter-pill" data-level="debutant">🟢 Débutant</button>
+                    <button class="filter-pill" data-level="intermediaire">🟡 Intermédiaire</button>
+                    <button class="filter-pill" data-level="avance">🟠 Avancé</button>
+                    <button class="filter-pill" data-level="competition">🔴 Compétition</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🎯 Grille des entraînements -->
+        @if($trainings->count() > 0)
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="trainings-grid">
+                @foreach($trainings as $training)
+                    <div class="training-card glass-card p-6 hover-lift animate-fade-in" 
+                         data-type="{{ $training->type }}" 
+                         data-level="{{ $training->niveau }}">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-2xl">
+                                        @switch($training->type)
+                                            @case('technique') 🎯 @break
+                                            @case('endurance') 💪 @break
+                                            @case('vitesse') ⚡ @break
+                                            @case('competition') 🏆 @break
+                                        @endswitch
+                                    </span>
+                                    <span class="level-badge level-{{ $training->niveau }}">
+                                        {{ ucfirst($training->niveau) }}
+                                    </span>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2">{{ $training->title }}</h3>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-blue-300">{{ $training->duree_minutes }}'</div>
+                                <div class="text-white/60 text-sm">durée</div>
+                            </div>
+                        </div>
+
+                        @if($training->description)
+                            <p class="text-white/80 mb-4 line-clamp-3">{{ $training->description }}</p>
+                        @endif
+
+                        @if($training->plannings->count() > 0)
+                            <div class="mb-4">
+                                <div class="text-white/60 text-sm mb-1">Plannings associés:</div>
+                                <div class="flex flex-wrap gap-1">
+                                    @foreach($training->plannings->take(3) as $planning)
+                                        <span class="planning-badge">
+                                            {{ $planning->title }}
+                                        </span>
+                                    @endforeach
+                                    @if($training->plannings->count() > 3)
+                                        <span class="text-white/60 text-sm">+{{ $training->plannings->count() - 3 }} autres</span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                            <div class="flex items-center gap-2">
+                                @if($training->pdf_path)
+                                    <a href="{{ route('trainings.download-pdf', $training) }}" 
+                                       class="btn-icon" title="Télécharger PDF">
+                                        📄
+                                    </a>
+                                @endif
+                                <span class="type-badge type-{{ $training->type }}">
+                                    {{ ucfirst($training->type) }}
+                                </span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="{{ route('trainings.show', $training) }}" 
+                                   class="btn-icon" title="Voir les détails">
+                                    👁️
+                                </a>
+                                <a href="{{ route('trainings.edit', $training) }}" 
+                                   class="btn-icon" title="Modifier">
+                                    ✏️
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <!-- Pagination -->
+            @if($trainings->hasPages())
+                <div class="mt-8">
+                    {{ $trainings->links('pagination::tailwind') }}
+                </div>
+            @endif
+        @else
+            <div class="text-center py-12">
+                <div class="text-6xl mb-4">🏊‍♂️</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Aucun entraînement disponible</h3>
+                <p class="text-white/70 mb-6">Créez votre premier entraînement pour commencer</p>
+                <a href="{{ route('trainings.create') }}" class="btn-primary">
+                    ✨ Créer un Entraînement
+                </a>
+            </div>
+        @endif
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Système de filtrage
+            const filterPills = document.querySelectorAll('.filter-pill');
+            const trainingCards = document.querySelectorAll('.training-card');
+
+            let activeType = 'all';
+            let activeLevel = null;
+
+            filterPills.forEach(pill => {
+                pill.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    const level = this.dataset.level;
+
+                    // Gestion des filtres de type
+                    if (filter) {
+                        // Retirer la classe active des autres filtres de type
+                        document.querySelectorAll('[data-filter]').forEach(p => p.classList.remove('active'));
+                        this.classList.add('active');
+                        activeType = filter;
+                    }
+
+                    // Gestion des filtres de niveau
+                    if (level) {
+                        if (this.classList.contains('active')) {
+                            this.classList.remove('active');
+                            activeLevel = null;
+                        } else {
+                            document.querySelectorAll('[data-level]').forEach(p => p.classList.remove('active'));
+                            this.classList.add('active');
+                            activeLevel = level;
+                        }
+                    }
+
+                    // Appliquer les filtres
+                    filterTrainings();
+                });
+            });
+
+            function filterTrainings() {
+                trainingCards.forEach(card => {
+                    const cardType = card.dataset.type;
+                    const cardLevel = card.dataset.level;
+
+                    const typeMatch = activeType === 'all' || cardType === activeType;
+                    const levelMatch = !activeLevel || cardLevel === activeLevel;
+
+                    if (typeMatch && levelMatch) {
+                        card.style.display = 'block';
+                        card.classList.add('animate-fade-in');
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // Animation d'apparition
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-slide-up');
+                    }
+                });
+            });
+
+            trainingCards.forEach(card => observer.observe(card));
+        });
+    </script>
+</body>
+</html>

@@ -6,11 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +22,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'birth_date',
+        'address',
+        'telephone',
+        'date_naissance',
     ];
 
     /**
@@ -43,6 +49,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birth_date' => 'date',
+            'date_naissance' => 'date',
         ];
     }
 
@@ -57,11 +65,6 @@ class User extends Authenticatable
     public function plannings()
     {
         return $this->belongsToMany(Planning::class, 'user_planning')->withPivot('registration_date', 'status')->withTimestamps();
-    }
-
-    public function competitions()
-    {
-        return $this->belongsToMany(Competition::class, 'user_competition')->withPivot('registration_date', 'status')->withTimestamps();
     }
 
     public function trainings()
