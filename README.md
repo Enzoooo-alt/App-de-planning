@@ -162,7 +162,7 @@ Fichiers de configuration Laravel :
 - **Backend** : Laravel 12 (PHP 8.2+)
 - **Frontend** : Inertia.js avec Vite
 - **Styling** : Tailwind CSS
-- **Base de données** : MySQL/PostgreSQL avec Eloquent ORM
+- **Base de données** : MySQL/MariaDB
 - **Tests** : PHPUnit
 
 ## 📝 Commandes utiles
