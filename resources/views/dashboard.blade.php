@@ -191,7 +191,7 @@
             <div class="bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                        🎉 Bienvenue sur Lyon Palme !
+                         Bienvenue sur Lyon Palme !
                     </h3>
                     <div class="bg-blue-50 rounded-lg p-4">
                         <p class="text-gray-700 mb-3">
@@ -217,7 +217,7 @@
                         </ul>
                         <div class="mt-4 pt-4 border-t border-blue-200">
                             <p class="text-xs text-gray-500">
-                                💡 Conseil : Cette version simplifiée se concentre sur l'affichage des statistiques et des informations essentielles.
+                                 Conseil : Cette version simplifiée se concentre sur l'affichage des statistiques et des informations essentielles.
                             </p>
                         </div>
                     </div>
