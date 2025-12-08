@@ -217,7 +217,7 @@
                         </ul>
                         <div class="mt-4 pt-4 border-t border-blue-200">
                             <p class="text-xs text-gray-500">
-                                 Conseil : Cette version simplifiée se concentre sur l'affichage des statistiques et des informations essentielles.
+                                 Attention : Cette application est en phase de développement. Certaines fonctionnalités peuvent ne pas être entièrement opérationnelles. N'oubliez pas de pousser vos améliorations sur le GitHub commun !
                             </p>
                         </div>
                     </div>
