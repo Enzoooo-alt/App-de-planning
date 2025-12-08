@@ -203,16 +203,6 @@ php artisan view:clear
 - Les adhérents peuvent commenter les entraînements
 - Système d'audit pour tracer les actions
 
-## 🤝 Contribution
-
-Pour contribuer au projet :
-
-1. Fork le repository
-2. Créer une branche pour votre fonctionnalité
-3. Commiter vos changements
-4. Pousser vers la branche
-5. Créer une Pull Request
-
 ## 📄 Licence
 
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
