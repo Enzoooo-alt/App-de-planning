@@ -11,37 +11,11 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Figtree', 'ui-sans-serif', 'system-ui'],
-                    },
-                }
-            }
-        }
-    </script>
+    <!-- Lyon Palme CSS -->
+    <link href="{{ asset('css/lyon-palme.css') }}" rel="stylesheet">
     
-    <!-- Custom styles -->
-    <style>
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
-        }
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-pulse-slow {
-            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-    </style>
+    <!-- TailwindCSS CDN (pour les utilitaires) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
     @yield('content')
