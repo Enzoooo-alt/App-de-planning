@@ -220,7 +220,3 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 ## 📞 Contact
 
 Pour toute question concernant le projet Lyon Palme, n'hésitez pas à nous contacter.
-
----
-
-*Développé avec ❤️ pour le club Lyon Palme*
