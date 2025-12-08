@@ -19,9 +19,7 @@
                 <label for="name" class="form-label">Nom complet</label>
                 <input id="name" class="form-input-enhanced" 
                        type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name">
-                @error('name')
-                    <div class="form-error-enhanced">{{ $message }}</div>
-                @enderror
+           
             </div>
 
             <!-- Email Address -->
