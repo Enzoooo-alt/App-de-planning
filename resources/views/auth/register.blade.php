@@ -19,7 +19,9 @@
                 <label for="name" class="form-label">Nom complet</label>
                 <input id="name" class="form-input-enhanced" 
                        type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name">
-           
+                @error('name')
+                    <div class="form-error-enhanced">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Email Address -->
@@ -64,12 +66,51 @@
             </div>
 
             <!-- Information -->
-            <div class="auth-footer">
-                <p class="info-disclaimer">
+           <!-- Juste cette partie modifiée -->
+        <div class="auth-footer">
+            <p class="info-disclaimer">
+                <a href="{{ route('privacy') }}" target="_blank" 
+                style="color: #3498db; text-decoration: underline; font-weight: 500;">
                     En vous inscrivant, vous acceptez nos conditions d'utilisation et notre politique de confidentialité.
-                </p>
-            </div>
+                </a><br>
+            </p>
+        </div>
+
+        <div class="auth-footer">
+            <p class="info-disclaimer">
+                <a href="{{ route ('reglement') }}" target="_blank" 
+                style="color: #3498db; text-decoration: underline; font-weight: 500;">
+                Reglement intérieur
+                </a>
+            </p>
+        </div>
+
+        
+        <div class="auth-footer">
+            <p class="info-disclaimer">
+                <a href="{{ route ('welcome') }}" class="btn-back">
+                Retour a la page d'accueil 
+                </a>
+            </p>
+        </div>
+
         </form>
     </div>
 </div>
 @endsection
+
+
+
+<style>
+
+.btn-back {
+    background: #3498db;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+</style>
