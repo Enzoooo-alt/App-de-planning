@@ -1,12 +1,22 @@
-# Lyon Palme - Système de Gestion d'Entraînements
+# 🌊 Lyon Palme - Plateforme Maritime Professionnelle
 
-<p align="center">
-    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300" alt="Laravel Logo">
-</p>
+<div align="center">
+  <h3>🏊‍♀️ Système de Gestion d'Activités Aquatiques 🤿</h3>
+  
+  ![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+  ![Design System](https://img.shields.io/badge/Design_System-Maritime-0D9488?style=for-the-badge&logo=waves&logoColor=white)
+  ![Status](https://img.shields.io/badge/Status-Production_Ready-22C55E?style=for-the-badge)
+</div>
 
-## À propos du projet
+## 🌊 À propos du projet
 
-Lyon Palme est une application web développée avec Laravel 12 pour la gestion des entraînements et des adhérents d'un club de natation. L'application permet de gérer les entraîneurs, les entraînements, les séances et les adhérents du club.
+**Lyon Palme** est une plateforme maritime professionnelle développée avec Laravel 12, spécialement conçue pour la gestion complète d'activités aquatiques. L'application intègre un **Design System Maritime** unique avec des composants spécialisés pour la planification de séances de plongée, natation et entraînements aquatiques.
+
+### ✨ Design System Maritime v2.0
+- **Palette professionnelle** : Navy, Teal, Amber
+- **Composants spécialisés** : Calendrier maritime, cartes mission, timeline
+- **Interface responsive** : Mobile-first design optimisé pour tablettes de terrain
+- **Animations fluides** : Inspirées du mouvement de l'eau
 
 ## Fonctionnalités principales
 

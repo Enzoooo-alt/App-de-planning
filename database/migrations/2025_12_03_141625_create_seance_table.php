@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('SEANCE', function (Blueprint $table) {
-            $table->integer('idSeance')->primary();
-            $table->date('dateSeance')->nullable();
-            $table->time('heureDebut')->nullable();
-            $table->time('heureFin')->nullable();
-            $table->integer('idEntrainement');
-            $table->foreign('idEntrainement')->references('idEntrainement')->on('ENTRAINEMENT');
+        Schema::create('seance', function (Blueprint $table) {
+            $table->id();
+            $table->date('date_seance');
+            $table->time('heure_debut');
+            $table->time('heure_fin');
+            $table->text('description')->nullable();
+            $table->foreignId('entrainement_id')->constrained('entrainement')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('SEANCE');
+        Schema::dropIfExists('seance');
     }
 };

@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('entrainement', function (Blueprint $table) {
-            $table->id();
-            $table->string('titre');
-            $table->text('description')->nullable();
-            $table->foreignId('entraineur_id')->constrained('entraineur')->onDelete('cascade');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('first_name')->nullable()->after('name');
+            $table->string('last_name')->nullable()->after('first_name');
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('entrainement');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['first_name', 'last_name']);
+        });
     }
 };

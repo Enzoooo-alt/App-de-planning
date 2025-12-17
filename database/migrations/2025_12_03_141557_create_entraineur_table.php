@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ENTRAINEUR', function (Blueprint $table) {
-            $table->integer('idEntraineur')->primary();
-            $table->string('nom', 512)->nullable();
-            $table->string('prenom', 512)->nullable();
-            $table->string('role', 512)->nullable();
-            $table->string('login', 512)->nullable();
-            $table->string('mot_de_passe', 512)->nullable();
+        Schema::create('entraineur', function (Blueprint $table) {
+            $table->id();
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('role')->nullable();
+            $table->string('login')->unique();
+            $table->string('mot_de_passe');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ENTRAINEUR');
+        Schema::dropIfExists('entraineur');
     }
 };
