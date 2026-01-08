@@ -16,7 +16,8 @@
 | Fichier | Description | Utilité |
 |---------|-------------|---------|
 | [PLAN_AMELIORATION.md](PLAN_AMELIORATION.md) | Plan de développement en 5 phases | Roadmap du projet |
-| [RAPPORT_PROGRESSION.md](RAPPORT_PROGRESSION.md) | Rapport de la session actuelle | État des lieux et statistiques |
+| [RAPPORT_PROGRESSION.md](RAPPORT_PROGRESSION.md) | Rapport Phase 1 (Design System) | État Phase 1 et statistiques |
+| [RAPPORT_SESSION_PHASE2-3.md](RAPPORT_SESSION_PHASE2-3.md) | Rapport Phases 2 & 3 (Dashboards + Listes) | État Phases 2-3, +2400 lignes |
 
 ### 🎨 Design System
 
