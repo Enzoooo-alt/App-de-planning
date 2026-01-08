@@ -1,0 +1,815 @@
+/* ===========================================================================
+   Lyon Palme - Professional Maritime Design System
+   Theme: Aquatic Sports - Navy, Teal & Marine Professional Suite
+   Version: 2.0 Professional Edition
+   =========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   CSS VARIABLES - Maritime Color System
+   --------------------------------------------------------------------------- */
+:root {
+    /* Core Colors - Lyon Palme Brand */
+    --lp-navy: #0c4a6e;              /* Deep ocean navy */
+    --lp-navy-dark: #0a3a56;         /* Ultra deep navy */
+    --lp-navy-light: #0e5a84;        /* Light navy */
+    
+    --lp-teal: #0d9488;              /* Primary teal */
+    --lp-teal-dark: #0f766e;         /* Dark teal */
+    --lp-teal-light: #14b8a6;        /* Light teal */
+    --lp-teal-pale: #99f6e4;         /* Pale teal */
+    
+    --lp-marine: #0284c7;            /* Marine blue */
+    --lp-marine-dark: #0369a1;       /* Dark marine */
+    --lp-marine-light: #0ea5e9;      /* Light marine */
+    
+    /* Background Colors */
+    --lp-bg-primary: #ffffff;
+    --lp-bg-secondary: #f8fafc;
+    --lp-bg-tertiary: #f1f5f9;
+    --lp-bg-ocean: #ecfdf5;          /* Ocean breeze tint */
+    
+    /* Text Colors */
+    --lp-text-primary: #0f172a;      /* Primary text */
+    --lp-text-secondary: #334155;    /* Secondary text */
+    --lp-text-muted: #64748b;        /* Muted text */
+    --lp-text-light: #94a3b8;        /* Light text */
+    
+    /* UI Elements */
+    --lp-border: #e2e8f0;
+    --lp-border-focus: #0d9488;
+    --lp-card-bg: #ffffff;
+    
+    /* Gradients */
+    --lp-gradient-ocean: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #0ea5e9 100%);
+    --lp-gradient-deep: linear-gradient(135deg, #0c4a6e 0%, #0a3a56 100%);
+    --lp-gradient-marine: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+    
+    /* Shadows */
+    --lp-shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.03);
+    --lp-shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08);
+    --lp-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08);
+    --lp-shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1);
+    --lp-shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.12);
+    --lp-shadow-ocean: 0 10px 25px -3px rgba(13, 148, 136, 0.15);
+    
+    /* Spacing */
+    --lp-space-xs: 0.25rem;
+    --lp-space-sm: 0.5rem;
+    --lp-space-md: 1rem;
+    --lp-space-lg: 1.5rem;
+    --lp-space-xl: 2rem;
+    --lp-space-2xl: 3rem;
+    
+    /* Border Radius */
+    --lp-radius-sm: 0.375rem;
+    --lp-radius: 0.5rem;
+    --lp-radius-lg: 0.75rem;
+    --lp-radius-xl: 1rem;
+    
+    /* Transitions */
+    --lp-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --lp-transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --lp-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Typography */
+    --lp-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    
+    /* Container */
+    --lp-container-width: 1280px;
+    --lp-container-padding: 1.5rem;
+    
+    /* Semantic Colors */
+    --lp-success: #059669;
+    --lp-success-light: #d1fae5;
+    --lp-warning: #d97706;
+    --lp-warning-light: #fef3c7;
+    --lp-danger: #dc2626;
+    --lp-danger-light: #fee2e2;
+    --lp-info: #0284c7;
+    --lp-info-light: #dbeafe;
+}
+
+/* ---------------------------------------------------------------------------
+   RESET & BASE STYLES
+   --------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--lp-font-sans);
+    color: var(--lp-text-primary);
+    background: var(--lp-bg-primary);
+    line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------------
+   TYPOGRAPHY
+   --------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    color: var(--lp-text-primary);
+    margin-bottom: 0.75rem;
+}
+
+h1 { font-size: 2.25rem; }
+h2 { font-size: 1.875rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+p {
+    margin-bottom: 1rem;
+    line-height: 1.65;
+    color: var(--lp-text-secondary);
+}
+
+a {
+    color: var(--lp-teal);
+    text-decoration: none;
+    transition: color var(--lp-transition-fast);
+}
+
+a:hover {
+    color: var(--lp-teal-dark);
+    text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------------
+   LAYOUT COMPONENTS
+   --------------------------------------------------------------------------- */
+
+.container {
+    width: min(100% - 2 * var(--lp-container-padding), var(--lp-container-width));
+    margin: 0 auto;
+    padding: 0 var(--lp-container-padding);
+}
+
+.grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+@media (min-width: 768px) {
+    .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+    .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* ---------------------------------------------------------------------------
+   HEADER & NAVIGATION
+   --------------------------------------------------------------------------- */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--lp-border);
+    box-shadow: var(--lp-shadow-sm);
+}
+
+.site-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 4rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--lp-teal);
+    letter-spacing: -0.05em;
+    text-decoration: none;
+    transition: var(--lp-transition-fast);
+}
+
+.brand:hover {
+    opacity: 0.8;
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: var(--lp-radius);
+    font-weight: 500;
+    color: var(--lp-text-secondary);
+    transition: all var(--lp-transition-fast);
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    background: var(--lp-bg-ocean);
+    color: var(--lp-teal);
+    text-decoration: none;
+}
+
+.nav-link.active {
+    background: var(--lp-teal);
+    color: white;
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------------
+   CARD COMPONENTS
+   --------------------------------------------------------------------------- */
+.card {
+    background: var(--lp-card-bg);
+    border: 1px solid var(--lp-border);
+    border-radius: var(--lp-radius-lg);
+    padding: var(--lp-space-lg);
+    box-shadow: var(--lp-shadow-sm);
+    transition: all var(--lp-transition-normal);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--lp-shadow-lg);
+    border-color: var(--lp-teal-light);
+}
+
+.card-header {
+    background: var(--lp-gradient-ocean);
+    padding: var(--lp-space-lg);
+    color: white;
+    border-radius: var(--lp-radius-lg) var(--lp-radius-lg) 0 0;
+    margin: calc(-1 * var(--lp-space-lg)) calc(-1 * var(--lp-space-lg)) var(--lp-space-lg);
+}
+
+.card-header h1,
+.card-header h2,
+.card-header h3 {
+    margin: 0;
+    color: white;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--lp-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    color: var(--lp-text-muted);
+    font-size: 0.875rem;
+}
+
+/* ---------------------------------------------------------------------------
+   BUTTON COMPONENTS
+   --------------------------------------------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--lp-radius);
+    font-family: var(--lp-font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--lp-transition-fast);
+    white-space: nowrap;
+}
+
+.btn:hover {
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--lp-gradient-ocean);
+    color: white;
+    box-shadow: var(--lp-shadow-ocean);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--lp-shadow-lg);
+    color: white;
+}
+
+.btn-secondary {
+    background: var(--lp-card-bg);
+    color: var(--lp-teal);
+    border: 2px solid var(--lp-teal);
+}
+
+.btn-secondary:hover {
+    background: var(--lp-teal);
+    color: white;
+}
+
+.btn-navy {
+    background: var(--lp-gradient-deep);
+    color: white;
+    box-shadow: var(--lp-shadow-md);
+}
+
+.btn-navy:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+    color: white;
+}
+
+.btn-marine {
+    background: var(--lp-gradient-marine);
+    color: white;
+    box-shadow: var(--lp-shadow-md);
+}
+
+.btn-marine:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--lp-shadow-lg);
+    color: white;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--lp-teal);
+    border: 2px solid var(--lp-teal);
+}
+
+.btn-outline:hover {
+    background: var(--lp-bg-ocean);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+/* ---------------------------------------------------------------------------
+   FORM COMPONENTS
+   --------------------------------------------------------------------------- */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--lp-text-primary);
+    font-size: 0.875rem;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--lp-border);
+    border-radius: var(--lp-radius);
+    font-family: var(--lp-font-sans);
+    font-size: 1rem;
+    background: var(--lp-card-bg);
+    color: var(--lp-text-primary);
+    transition: all var(--lp-transition-fast);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--lp-border-focus);
+    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--lp-text-light);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* ---------------------------------------------------------------------------
+   TABLE COMPONENTS
+   --------------------------------------------------------------------------- */
+.table-container {
+    overflow-x: auto;
+    border-radius: var(--lp-radius-lg);
+    border: 1px solid var(--lp-border);
+    background: var(--lp-card-bg);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.table thead {
+    background: var(--lp-gradient-ocean);
+    color: white;
+}
+
+.table th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+}
+
+.table td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid var(--lp-border);
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background: var(--lp-bg-ocean);
+    transition: background-color var(--lp-transition-fast);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---------------------------------------------------------------------------
+   ALERT COMPONENTS
+   --------------------------------------------------------------------------- */
+.alert {
+    border-radius: var(--lp-radius);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: var(--lp-success-light);
+    border-color: var(--lp-success);
+    color: var(--lp-success);
+}
+
+.alert-error {
+    background: var(--lp-danger-light);
+    border-color: var(--lp-danger);
+    color: var(--lp-danger);
+}
+
+.alert-info {
+    background: var(--lp-info-light);
+    border-color: var(--lp-info);
+    color: var(--lp-info);
+}
+
+.alert-warning {
+    background: var(--lp-warning-light);
+    border-color: var(--lp-warning);
+    color: var(--lp-warning);
+}
+
+/* ---------------------------------------------------------------------------
+   BADGE COMPONENTS
+   --------------------------------------------------------------------------- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--lp-radius);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.badge-teal {
+    background: var(--lp-bg-ocean);
+    color: var(--lp-teal);
+}
+
+.badge-navy {
+    background: rgba(12, 74, 110, 0.1);
+    color: var(--lp-navy);
+}
+
+.badge-success {
+    background: var(--lp-success-light);
+    color: var(--lp-success);
+}
+
+.badge-warning {
+    background: var(--lp-warning-light);
+    color: var(--lp-warning);
+}
+
+.badge-danger {
+    background: var(--lp-danger-light);
+    color: var(--lp-danger);
+}
+
+/* ---------------------------------------------------------------------------
+   MARITIME CALENDAR
+   --------------------------------------------------------------------------- */
+.maritime-calendar {
+    background: var(--lp-bg-primary);
+    border-radius: var(--lp-radius-xl);
+    box-shadow: var(--lp-shadow-ocean);
+    overflow: hidden;
+    border: 1px solid var(--lp-teal);
+}
+
+.calendar-header {
+    background: var(--lp-gradient-ocean);
+    color: white;
+    padding: var(--lp-space-lg);
+    text-align: center;
+    position: relative;
+}
+
+.calendar-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--lp-transition-normal);
+}
+
+.calendar-nav:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.calendar-nav.prev { left: var(--lp-space-lg); }
+.calendar-nav.next { right: var(--lp-space-lg); }
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-day-header {
+    background: var(--lp-navy);
+    color: white;
+    padding: var(--lp-space-md);
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--lp-space-sm);
+    border: 1px solid var(--lp-border);
+    background: var(--lp-bg-primary);
+    transition: var(--lp-transition-normal);
+    cursor: pointer;
+}
+
+.calendar-day:hover {
+    background: var(--lp-bg-ocean);
+}
+
+.calendar-day.has-session {
+    background: var(--lp-bg-ocean);
+    border-color: var(--lp-teal);
+}
+
+.calendar-day.selected {
+    background: var(--lp-teal);
+    color: white;
+}
+
+/* ---------------------------------------------------------------------------
+   UTILITY CLASSES
+   --------------------------------------------------------------------------- */
+
+/* Spacing */
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+
+/* Text */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-muted { color: var(--lp-text-muted); }
+.text-primary { color: var(--lp-text-primary); }
+.text-teal { color: var(--lp-teal); }
+.text-navy { color: var(--lp-navy); }
+
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-medium { font-weight: 500; }
+
+.text-sm { font-size: 0.875rem; }
+.text-base { font-size: 1rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+
+/* Flex */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+
+/* ---------------------------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------------------------- */
+.site-footer {
+    background: var(--lp-navy);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 2rem 0;
+    border-top: 4px solid var(--lp-teal);
+}
+
+.site-footer a {
+    color: var(--lp-teal-light);
+}
+
+.site-footer a:hover {
+    color: white;
+}
+
+.site-footer p {
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+/* ---------------------------------------------------------------------------
+   RESPONSIVE DESIGN
+   --------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    h1 { font-size: 1.875rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+    
+    .site-header .container {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+    
+    .nav {
+        gap: 0.25rem;
+    }
+    
+    .nav-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    .card {
+        padding: var(--lp-space-md);
+    }
+    
+    .table-container {
+        font-size: 0.8rem;
+    }
+    
+    .table th,
+    .table td {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .maritime-calendar {
+        margin: 0 -1rem;
+        border-radius: 0;
+    }
+    
+    .calendar-grid {
+        font-size: 0.875rem;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   ANIMATIONS
+   --------------------------------------------------------------------------- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.slide-in-down {
+    animation: slideInDown 0.3s ease-out;
+}
+
+/* Smooth scrolling for anchors */
+h1, h2, h3 {
+    scroll-margin-top: 5rem;
+}
+
+/* Focus states */
+:focus-visible {
+    outline: 2px solid var(--lp-teal);
+    outline-offset: 2px;
+}
