@@ -37,12 +37,24 @@ class SeanceController extends Controller
      */
     public function index()
     {
-        $seances = Seance::with('entrainement.entraineur')
+        $seances = Seance::with('entrainement.entraineur.user')
                         ->orderBy('date_seance', 'desc')
                         ->orderBy('heure_debut', 'desc')
-                        ->paginate(10);
+                        ->paginate(15);
         
-        return view('seances.index', compact('seances'));
+        // Statistiques pour le dashboard
+        $stats = [
+            'seances_semaine' => Seance::whereBetween('date_seance', [
+                now()->startOfWeek(),
+                now()->endOfWeek()
+            ])->count(),
+            'seances_mois' => Seance::whereMonth('date_seance', now()->month)
+                                   ->whereYear('date_seance', now()->year)
+                                   ->count(),
+            'seances_avenir' => Seance::where('date_seance', '>=', now())->count(),
+        ];
+        
+        return view('seances.index-v2', compact('seances', 'stats'));
     }
 
     /**

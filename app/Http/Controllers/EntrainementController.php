@@ -37,9 +37,21 @@ class EntrainementController extends Controller
      */
     public function index()
     {
-        $entrainements = Entrainement::with('entraineur')->latest()->paginate(10);
+        $entrainements = Entrainement::with('entraineur.user')
+            ->withCount('seances')
+            ->latest()
+            ->paginate(15);
         
-        return view('entrainements.index', compact('entrainements'));
+        // Statistiques pour le dashboard
+        $stats = [
+            'total_seances' => \App\Models\Seance::count(),
+            'total_entraineurs' => Entraineur::count(),
+            'programmes_actifs' => Entrainement::whereHas('seances', function($q) {
+                $q->where('date_seance', '>=', now());
+            })->count(),
+        ];
+        
+        return view('entrainements.index-v2', compact('entrainements', 'stats'));
     }
 
     /**

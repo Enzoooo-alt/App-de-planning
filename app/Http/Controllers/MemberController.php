@@ -31,9 +31,16 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $adherents = Adherent::latest()->paginate(10);
+        $adherents = Adherent::with('user')->latest()->paginate(15);
         
-        return view('adherents.index', compact('adherents'));
+        // Statistiques pour le dashboard
+        $stats = [
+            'actifs' => Adherent::where('actif', true)->count(),
+            'avec_niveau' => Adherent::whereNotNull('niveau')->count(),
+            'avec_email' => Adherent::whereNotNull('email')->count(),
+        ];
+        
+        return view('adherents.index-v2', compact('adherents', 'stats'));
     }
 
     /**
