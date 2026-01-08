@@ -32,11 +32,26 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Routes for resources (accessible without auth for now)
-Route::resource('entraineurs', TrainerController::class);
-Route::resource('adherents', MemberController::class);
-Route::resource('entrainements', EntrainementController::class);
-Route::resource('seances', SeanceController::class);
+// Routes for resources (protected by role middleware)
+Route::middleware(['auth'])->group(function () {
+    // Entraîneurs - Seuls président et responsable planning peuvent créer/modifier/supprimer
+    Route::resource('entraineurs', TrainerController::class)->except(['index', 'show']);
+    Route::resource('entraineurs', TrainerController::class)->only(['index', 'show'])
+        ->middleware('role:president,responsable_planning,entraineur,membre');
+    
+    // Adhérents - Seuls président et responsable planning peuvent gérer
+    Route::resource('adherents', MemberController::class)->middleware('role:president,responsable_planning');
+    
+    // Entraînements - Tous sauf membres simples pour création/modification
+    Route::resource('entrainements', EntrainementController::class)->except(['index', 'show'])
+        ->middleware('role:president,responsable_planning,entraineur');
+    Route::resource('entrainements', EntrainementController::class)->only(['index', 'show']);
+    
+    // Séances - Tous sauf membres simples pour création/modification
+    Route::resource('seances', SeanceController::class)->except(['index', 'show'])
+        ->middleware('role:president,responsable_planning,entraineur');
+    Route::resource('seances', SeanceController::class)->only(['index', 'show']);
+});
 
 require __DIR__.'/auth.php';
 

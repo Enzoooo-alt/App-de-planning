@@ -34,12 +34,22 @@ class Entraineur extends Model
     protected $table = 'entraineur';
     
     protected $fillable = [
-        'nom', 'prenom', 'role', 'login', 'mot_de_passe'
+        'nom', 'prenom', 'role', 'login', 'mot_de_passe', 'user_id', 'specialite', 'niveau_certification', 'telephone'
     ];
 
     protected $hidden = [
         'mot_de_passe',
     ];
+
+    /**
+     * Relation avec le compte utilisateur (optionnel)
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Relation avec les programmes d'entraînement
