@@ -71,4 +71,24 @@ class Adherent extends Model
     {
         return $this->hasMany(Commentaire::class, 'adherent_id');
     }
+
+    /**
+     * Relation avec les présences de cet adhérent
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function presences()
+    {
+        return $this->hasMany(Presence::class, 'adherent_id');
+    }
+
+    /**
+     * Relation avec les paiements de cet adhérent
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function paiements()
+    {
+        return $this->hasMany(Paiement::class, 'adherent_id');
+    }
 }

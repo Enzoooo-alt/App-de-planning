@@ -57,7 +57,7 @@ class TestUsersSeeder extends Seeder
 
         echo "✅ Président créé : president@lyonpalme.fr / password123\n";
 
-        // ====== 2. RESPONSABLE PLANNING ======
+        // ====== 2. RESPONSABLE PLANNING (aussi adhérent) ======
         $userResponsable = User::create([
             'name' => 'Marie Planificatrice',
             'first_name' => 'Marie',
@@ -68,7 +68,22 @@ class TestUsersSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-        echo "✅ Responsable Planning créé : planning@lyonpalme.fr / password123\n";
+        // Ajouter le rôle de membre aussi (double casquette)
+        $userResponsable->roles()->attach($roleMembre->id);
+        
+        // Créer son profil adhérent
+        $adherentMarie = Adherent::create([
+            'nom' => 'Planificatrice',
+            'prenom' => 'Marie',
+            'email' => 'planning@lyonpalme.fr',
+            'telephone' => '06 77 88 99 00',
+            'date_adhesion' => now()->subYears(3),
+            'niveau' => 'avance',
+            'actif' => true,
+            'user_id' => $userResponsable->id,
+        ]);
+
+        echo "✅ Responsable Planning créé : planning@lyonpalme.fr / password123 (AUSSI adhérent avancé)\n";
 
         // ====== 3. ENTRAÎNEURS (3 exemples) ======
         

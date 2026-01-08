@@ -238,26 +238,7 @@
     </div>
 
     <!-- Actions rapides -->
-    <div class="grid md:grid-cols-3 gap-6">
-        <a href="{{ route('entrainements.index') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
-           onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--lp-shadow-lg)'"
-           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
-            <div style="text-align: center; padding: 1rem;">
-                <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                    <svg width="28" height="28" fill="none" stroke="var(--lp-teal)" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                    </svg>
-                </div>
-                <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
-                    Mes entraînements
-                </h3>
-                <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
-                    Gérer mes programmes
-                </p>
-            </div>
-        </a>
-
+    <div class="grid md:grid-cols-4 gap-6">
         <a href="{{ route('seances.index') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
            onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--lp-shadow-lg)'"
            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
@@ -271,7 +252,7 @@
                     </svg>
                 </div>
                 <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
-                    Toutes les séances
+                    Séances
                 </h3>
                 <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
                     Planning complet
@@ -279,23 +260,53 @@
             </div>
         </a>
 
-        <a href="{{ route('adherents.index') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
+        <a href="{{ route('entrainements.index') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
            onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--lp-shadow-lg)'"
            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
             <div style="text-align: center; padding: 1rem;">
                 <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                    <svg width="28" height="28" fill="none" stroke="var(--lp-navy)" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    <svg width="28" height="28" fill="none" stroke="var(--lp-teal)" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
                     </svg>
                 </div>
                 <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
-                    Adhérents
+                    Entraînements
                 </h3>
                 <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
-                    Liste des membres
+                    Mes programmes
+                </p>
+            </div>
+        </a>
+
+        <a href="{{ route('documents.index') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
+           onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--lp-shadow-lg)'"
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
+            <div style="text-align: center; padding: 1rem;">
+                <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                    <span style="font-size: 1.75rem;">📄</span>
+                </div>
+                <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
+                    Documents
+                </h3>
+                <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
+                    Fichiers partagés
+                </p>
+            </div>
+        </a>
+
+        <a href="{{ route('messages.index') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
+           onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--lp-shadow-lg)'"
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
+            <div style="text-align: center; padding: 1rem;">
+                <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                    <span style="font-size: 1.75rem;">💬</span>
+                </div>
+                <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
+                    Messages
+                </h3>
+                <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
+                    Messagerie
                 </p>
             </div>
         </a>

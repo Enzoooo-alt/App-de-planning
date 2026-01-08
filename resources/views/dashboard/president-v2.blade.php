@@ -288,7 +288,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('register') }}" class="card" style="text-decoration: none; border: 2px solid var(--lp-border); transition: all var(--lp-transition-normal);"
+                <a href="{{ route('users.create') }}" class="card" style="text-decoration: none; border: 2px solid var(--lp-border); transition: all var(--lp-transition-normal);"
                    onmouseover="this.style.borderColor='var(--lp-success)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--lp-shadow-md)'"
                    onmouseout="this.style.borderColor='var(--lp-border)'; this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
                     <div style="text-align: center; padding: 1.5rem;">
@@ -304,6 +304,86 @@
                         </h3>
                         <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
                             Créer un compte
+                        </p>
+                    </div>
+                </a>
+
+                <a href="{{ route('presences.index') }}" class="card" style="text-decoration: none; border: 2px solid var(--lp-border); transition: all var(--lp-transition-normal);"
+                   onmouseover="this.style.borderColor='#10b981'; this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--lp-shadow-md)'"
+                   onmouseout="this.style.borderColor='var(--lp-border)'; this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <span style="font-size: 1.75rem;">📋</span>
+                        </div>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
+                            Présences
+                        </h3>
+                        <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
+                            Suivi et statistiques
+                        </p>
+                    </div>
+                </a>
+
+                <a href="{{ route('paiements.dashboard') }}" class="card" style="text-decoration: none; border: 2px solid var(--lp-border); transition: all var(--lp-transition-normal);"
+                   onmouseover="this.style.borderColor='var(--lp-teal)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--lp-shadow-md)'"
+                   onmouseout="this.style.borderColor='var(--lp-border)'; this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <span style="font-size: 1.75rem;">💰</span>
+                        </div>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
+                            Paiements
+                        </h3>
+                        <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
+                            Cotisations et finances
+                        </p>
+                    </div>
+                </a>
+
+                <a href="{{ route('documents.index') }}" class="card" style="text-decoration: none; border: 2px solid var(--lp-border); transition: all var(--lp-transition-normal);"
+                   onmouseover="this.style.borderColor='var(--lp-navy)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--lp-shadow-md)'"
+                   onmouseout="this.style.borderColor='var(--lp-border)'; this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <span style="font-size: 1.75rem;">📄</span>
+                        </div>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
+                            Documents
+                        </h3>
+                        <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
+                            Bibliothèque partagée
+                        </p>
+                    </div>
+                </a>
+
+                <a href="{{ route('messages.index') }}" class="card" style="text-decoration: none; border: 2px solid var(--lp-border); transition: all var(--lp-transition-normal);"
+                   onmouseover="this.style.borderColor='#f59e0b'; this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--lp-shadow-md)'"
+                   onmouseout="this.style.borderColor='var(--lp-border)'; this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <span style="font-size: 1.75rem;">💬</span>
+                        </div>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
+                            Messages
+                        </h3>
+                        <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
+                            Communication interne
+                        </p>
+                    </div>
+                </a>
+
+                <a href="{{ route('actualites.manage') }}" class="card" style="text-decoration: none; border: 2px solid var(--lp-border); transition: all var(--lp-transition-normal);"
+                   onmouseover="this.style.borderColor='var(--lp-teal)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--lp-shadow-md)'"
+                   onmouseout="this.style.borderColor='var(--lp-border)'; this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
+                    <div style="text-align: center; padding: 1.5rem;">
+                        <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <span style="font-size: 1.75rem;">📰</span>
+                        </div>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
+                            Actualités
+                        </h3>
+                        <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
+                            Gérer les publications
                         </p>
                     </div>
                 </a>

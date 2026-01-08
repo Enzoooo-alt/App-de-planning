@@ -75,16 +75,23 @@ class User extends Authenticatable
     }
 
     /**
-     * Relation avec le rôle de l'utilisateur
-     * 
-     * Définit la relation belongsTo avec le modèle Role pour associer
-     * chaque utilisateur à son rôle dans le club (président, entraîneur, etc.).
+     * Relation avec le rôle principal de l'utilisateur (legacy - pour compatibilité)
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Relation avec tous les rôles de l'utilisateur (système de rôles multiples)
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user')->withTimestamps();
     }
 
     /**
@@ -99,40 +106,61 @@ class User extends Authenticatable
 
     /**
      * Vérifie si l'utilisateur possède un rôle spécifique
-     * 
-     * Méthode utilitaire pour contrôler les permissions et l'accès
-     * aux fonctionnalités selon le rôle de l'utilisateur.
+     * Support des rôles multiples via la table pivot
      * 
      * @param string $roleName Le nom du rôle à vérifier
      * @return bool True si l'utilisateur a ce rôle, false sinon
      */
     public function hasRole($roleName)
     {
+        // Vérifier dans les rôles multiples (prioritaire)
+        if ($this->roles()->where('nom_role', $roleName)->exists()) {
+            return true;
+        }
+        
+        // Fallback sur le rôle principal (legacy)
         return $this->role && $this->role->nom_role === $roleName;
     }
 
     /**
      * Vérifie si l'utilisateur possède au moins un des rôles spécifiés
-     * 
-     * Méthode flexible permettant de vérifier plusieurs rôles simultanément.
-     * Utile pour les permissions qui s'appliquent à plusieurs types d'utilisateurs.
+     * Support des rôles multiples
      * 
      * @param string|array $roles Rôle unique (string) ou liste de rôles (array)
      * @return bool True si l'utilisateur a au moins un des rôles, false sinon
      */
     public function hasAnyRole($roles)
     {
-        if (!$this->role) return false;
+        $roles = is_array($roles) ? $roles : [$roles];
         
-        if (is_string($roles)) {
-            return $this->role->nom_role === $roles;
+        // Vérifier dans les rôles multiples (prioritaire)
+        if ($this->roles()->whereIn('nom_role', $roles)->exists()) {
+            return true;
         }
         
-        if (is_array($roles)) {
-            return in_array($this->role->nom_role, $roles);
+        // Fallback sur le rôle principal (legacy)
+        if ($this->role && in_array($this->role->nom_role, $roles)) {
+            return true;
         }
         
         return false;
+    }
+    
+    /**
+     * Obtenir tous les noms de rôles de l'utilisateur
+     * 
+     * @return array
+     */
+    public function getRoleNames()
+    {
+        $roleNames = $this->roles->pluck('nom_role')->toArray();
+        
+        // Ajouter le rôle principal si présent
+        if ($this->role && !in_array($this->role->nom_role, $roleNames)) {
+            $roleNames[] = $this->role->nom_role;
+        }
+        
+        return $roleNames;
     }
 
     /**
@@ -183,5 +211,37 @@ class User extends Authenticatable
     public function canDelete()
     {
         return $this->hasRole('president');
+    }
+
+    /**
+     * Relation avec les conversations de l'utilisateur
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function conversations()
+    {
+        return $this->belongsToMany(Conversation::class, 'conversation_user')
+            ->withPivot('derniere_lecture')
+            ->withTimestamps();
+    }
+
+    /**
+     * Relation avec les messages envoyés par l'utilisateur
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    /**
+     * Relation avec les documents uploadés par l'utilisateur
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function documentsUploaded()
+    {
+        return $this->hasMany(Document::class, 'upload_par');
     }
 }

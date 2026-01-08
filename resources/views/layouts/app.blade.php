@@ -22,14 +22,18 @@
                 <div class="brand">🏊 Lyon Palme</div>
                 
                 <nav class="nav">
+                    @auth
                     <a href="/dashboard" class="nav-link">Dashboard</a>
+                    @if(auth()->user()->hasAnyRole(['president', 'responsable_planning', 'entraineur', 'membre']))
                     <a href="/entraineurs" class="nav-link">Entraîneurs</a>
+                    @endif
+                    @if(auth()->user()->hasAnyRole(['president', 'responsable_planning']))
                     <a href="/adherents" class="nav-link">Adhérents</a>
+                    @endif
                     <a href="/entrainements" class="nav-link">Entraînements</a>
                     <a href="/seances" class="nav-link">Séances</a>
                     
                     <!-- Profile User Link -->
-                    @auth
                         <div style="position: relative; display: flex; align-items: center; gap: 12px;">
                             <!-- User Profile Link -->
                             <a href="{{ route('profile.edit') }}" class="nav-link" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(124, 58, 237, 0.1); border-radius: var(--radius); border: 1px solid rgba(124, 58, 237, 0.2);">

@@ -167,7 +167,7 @@
     </div>
 
     <!-- Actions rapides -->
-    <div class="grid md:grid-cols-3 gap-6">
+    <div class="grid md:grid-cols-4 gap-6">
         <a href="{{ route('seances.index') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
            onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--lp-shadow-lg)'"
            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
@@ -189,21 +189,34 @@
             </div>
         </a>
 
-        <a href="{{ route('entrainements.index') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
+        <a href="{{ route('documents.index') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
            onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--lp-shadow-lg)'"
            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
             <div style="text-align: center; padding: 1rem;">
                 <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                    <svg width="28" height="28" fill="none" stroke="var(--lp-marine)" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
+                    <span style="font-size: 1.75rem;">📄</span>
                 </div>
                 <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
-                    Programmes d'entraînement
+                    Documents
                 </h3>
                 <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
-                    Découvrez nos programmes
+                    Accédez aux documents partagés
+                </p>
+            </div>
+        </a>
+
+        <a href="{{ route('messages.index') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
+           onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--lp-shadow-lg)'"
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
+            <div style="text-align: center; padding: 1rem;">
+                <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                    <span style="font-size: 1.75rem;">💬</span>
+                </div>
+                <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
+                    Messages
+                </h3>
+                <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
+                    Communiquez avec le club
                 </p>
             </div>
         </a>

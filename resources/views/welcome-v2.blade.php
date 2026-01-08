@@ -528,10 +528,10 @@
                 <span class="footer-link">
                     contact@lyonpalme.com
                 </span>
-                <a href="{{ url('/legal/privacy') }}" class="footer-link">
+                <a href="{{ route('privacy') }}" class="footer-link">
                     Politique de confidentialité
                 </a>
-                <a href="{{ url('/legal/reglement') }}" class="footer-link">
+                <a href="{{ route('reglement') }}" class="footer-link">
                     Règlement intérieur
                 </a>
             </div>

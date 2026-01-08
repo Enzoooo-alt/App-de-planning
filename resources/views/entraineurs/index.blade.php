@@ -32,10 +32,12 @@
                     </a>
                 </div>
                 
+                @if(auth()->check() && auth()->user()->hasAnyRole(['president', 'responsable_planning']))
                 <a href="{{ route('entraineurs.create') }}" class="button button-primary">
                     <span>➕</span>
                     Nouvel Entraîneur
                 </a>
+                @endif
             </div>
         </div>
 
@@ -155,9 +157,11 @@
                                                     <span style="background: var(--info-light); color: var(--info); padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
                                                         🔑 Actif
                                                     </span>
+                                                    @if(auth()->check() && auth()->user()->hasAnyRole(['president', 'responsable_planning']))
                                                     <div style="font-size: 0.75rem; color: var(--text-muted);">
                                                         {{ $entraineur->login }}
                                                     </div>
+                                                    @endif
                                                 </div>
                                             @else
                                                 <span style="color: var(--text-muted); font-style: italic; font-size: 0.875rem;">
@@ -170,6 +174,7 @@
                                                 <a href="{{ route('entraineurs.show', $entraineur) }}" class="button button-secondary" style="padding: 6px 10px; font-size: 0.75rem;">
                                                     👁️ Voir
                                                 </a>
+                                                @if(auth()->check() && auth()->user()->hasAnyRole(['president', 'responsable_planning']))
                                                 <a href="{{ route('entraineurs.edit', $entraineur) }}" class="button" style="background: var(--warning); color: white; padding: 6px 10px; font-size: 0.75rem;">
                                                     ✏️ Modifier
                                                 </a>
@@ -180,6 +185,7 @@
                                                         🗑️ Supprimer
                                                     </button>
                                                 </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

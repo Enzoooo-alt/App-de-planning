@@ -131,4 +131,46 @@ class MemberController extends Controller
         return redirect()->route('adherents.index')
                         ->with('success', 'Adhérent supprimé avec succès.');
     }
+
+    /**
+     * Assigner le rôle "membre" à un adhérent (création du compte utilisateur)
+     */
+    public function assignMemberRole(Request $request, Adherent $adherent)
+    {
+        // Vérifier que l'adhérent n'a pas déjà un compte utilisateur
+        if ($adherent->user_id) {
+            return redirect()->back()
+                            ->with('error', 'Cet adhérent a déjà un compte utilisateur.');
+        }
+
+        // Valider les données
+        $validated = $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        // Récupérer le rôle "membre"
+        $membreRole = \App\Models\Role::where('nom_role', 'membre')->first();
+        
+        if (!$membreRole) {
+            return redirect()->back()
+                            ->with('error', 'Le rôle "membre" n\'existe pas dans le système.');
+        }
+
+        // Créer le compte utilisateur
+        $user = \App\Models\User::create([
+            'name' => $adherent->prenom . ' ' . $adherent->nom,
+            'first_name' => $adherent->prenom,
+            'last_name' => $adherent->nom,
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'role_id' => $membreRole->id,
+        ]);
+
+        // Lier l'adhérent au compte utilisateur
+        $adherent->update(['user_id' => $user->id]);
+
+        return redirect()->back()
+                        ->with('success', 'Compte utilisateur créé avec succès. L\'adhérent peut maintenant se connecter à l\'application.');
+    }
 }

@@ -268,6 +268,26 @@
                 </p>
             </div>
         </a>
+
+        <a href="{{ route('users.create') }}" class="card" style="text-decoration: none; transition: all var(--lp-transition-normal);"
+           onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--lp-shadow-lg)'"
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--lp-shadow-sm)'">
+            <div style="text-align: center; padding: 1rem;">
+                <div style="width: 3.5rem; height: 3.5rem; background: var(--lp-bg-ocean); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                    <svg width="28" height="28" fill="none" stroke="var(--lp-warning)" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <path d="M20 8v6M23 11h-6"></path>
+                    </svg>
+                </div>
+                <h3 style="font-size: 1.125rem; font-weight: 600; color: var(--lp-navy); margin-bottom: 0.5rem;">
+                    Gestion utilisateurs
+                </h3>
+                <p style="color: var(--lp-text-muted); font-size: 0.9375rem;">
+                    Créer et gérer les comptes
+                </p>
+            </div>
+        </a>
     </div>
 </div>
 @endsection

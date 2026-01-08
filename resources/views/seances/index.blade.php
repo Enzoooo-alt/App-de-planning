@@ -32,7 +32,7 @@
                     </a>
                 </div>
                 
-                @if(auth()->user()->canManageSeances())
+                @if(auth()->check() && auth()->user()->hasAnyRole(['president', 'responsable_planning', 'entraineur']))
                 <a href="{{ route('seances.create') }}" class="button button-primary">
                     <span>➕</span>
                     Nouvelle Séance
@@ -67,7 +67,7 @@
                                     <th style="text-align: left;">📅 Date et Heure</th>
                                     <th style="text-align: left;">🏊‍♀️ Entraînement</th>
                                     <th style="text-align: left;">👨‍🏫 Entraîneur</th>
-                                    <th style="text-align: left;">📝 Description</th>
+                                    <th style="text-align: left;">📝 Commentaires</th>
                                     <th style="text-align: center; width: 200px;">⚙️ Actions</th>
                                 </tr>
                             </thead>
@@ -99,7 +99,7 @@
                                         </td>
                                         <td>
                                             <div style="color: var(--text-secondary);">
-                                                {{ Str::limit($seance->description ?? 'Aucune description', 50) }}
+                                                {{ Str::limit($seance->commentaires ?? 'Aucun commentaire', 50) }}
                                             </div>
                                         </td>
                                         <td style="text-align: center;">
@@ -108,13 +108,11 @@
                                                     👁️ Voir
                                                 </a>
                                                 
-                                                @if(auth()->user()->canManageSeances())
+                                                @if(auth()->check() && auth()->user()->hasAnyRole(['president', 'responsable_planning', 'entraineur']))
                                                 <a href="{{ route('seances.edit', $seance) }}" class="button button-amber" style="padding: 6px 12px; font-size: 0.875rem;">
                                                     ✏️ Modifier
                                                 </a>
-                                                @endif
                                                 
-                                                @if(auth()->user()->canDelete())
                                                 <form method="POST" action="{{ route('seances.destroy', $seance) }}" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette séance ?')">
                                                     @csrf
                                                     @method('DELETE')

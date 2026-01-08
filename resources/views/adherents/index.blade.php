@@ -32,10 +32,12 @@
                     </a>
                 </div>
                 
+                @if(auth()->check() && auth()->user()->hasAnyRole(['president', 'responsable_planning']))
                 <a href="{{ route('adherents.create') }}" class="button button-primary">
                     <span>➕</span>
                     Nouvel Adhérent
                 </a>
+                @endif
             </div>
         </div>
 
@@ -172,6 +174,7 @@
                                                 <a href="{{ route('adherents.show', $adherent) }}" class="button button-secondary" style="padding: 6px 10px; font-size: 0.75rem;">
                                                     👁️ Voir
                                                 </a>
+                                                @if(auth()->check() && auth()->user()->hasAnyRole(['president', 'responsable_planning']))
                                                 <a href="{{ route('adherents.edit', $adherent) }}" class="button" style="background: var(--warning); color: white; padding: 6px 10px; font-size: 0.75rem;">
                                                     ✏️ Modifier
                                                 </a>
@@ -182,6 +185,7 @@
                                                         🗑️ Supprimer
                                                     </button>
                                                 </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

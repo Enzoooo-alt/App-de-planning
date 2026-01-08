@@ -32,7 +32,7 @@
                     </a>
                 </div>
                 
-                @if(auth()->user()->canManageEntrainements())
+                @if(auth()->check() && auth()->user()->hasAnyRole(['president', 'responsable_planning', 'entraineur']))
                 <a href="{{ route('entrainements.create') }}" class="button button-primary">
                     <span>➕</span>
                     Nouvel Entraînement
@@ -123,6 +123,7 @@
                                                 <a href="{{ route('entrainements.show', $entrainement) }}" class="button button-secondary" style="padding: 6px 10px; font-size: 0.75rem;">
                                                     👁️ Voir
                                                 </a>
+                                                @if(auth()->check() && auth()->user()->hasAnyRole(['president', 'responsable_planning', 'entraineur']))
                                                 <a href="{{ route('entrainements.edit', $entrainement) }}" class="button" style="background: var(--warning); color: white; padding: 6px 10px; font-size: 0.75rem;">
                                                     ✏️ Modifier
                                                 </a>
@@ -133,6 +134,7 @@
                                                         🗑️ Supprimer
                                                     </button>
                                                 </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

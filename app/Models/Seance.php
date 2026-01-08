@@ -52,4 +52,24 @@ class Seance extends Model
     {
         return $this->belongsTo(Entrainement::class, 'entrainement_id');
     }
+
+    /**
+     * Relation avec l'entraîneur de la séance
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function entraineur()
+    {
+        return $this->belongsTo(Entraineur::class, 'entraineur_id');
+    }
+
+    /**
+     * Relation avec les présences de la séance
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function presences()
+    {
+        return $this->hasMany(Presence::class, 'seance_id');
+    }
 }

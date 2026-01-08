@@ -32,15 +32,22 @@ class Role extends Model
     ];
 
     /**
-     * Relation avec les utilisateurs ayant ce rôle
-     * 
-     * Définit la relation hasMany avec le modèle User pour récupérer
-     * tous les utilisateurs qui possèdent ce rôle spécifique.
+     * Relation avec les utilisateurs ayant ce rôle (rôle principal - legacy)
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    /**
+     * Relation avec tous les utilisateurs ayant ce rôle (via table pivot)
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function usersWithRole()
+    {
+        return $this->belongsToMany(User::class, 'role_user')->withTimestamps();
     }
 }
