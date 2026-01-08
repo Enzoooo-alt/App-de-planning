@@ -48,7 +48,8 @@ class MemberController extends Controller
      */
     public function create()
     {
-        return view('adherents.create');
+        $users = \App\Models\User::whereDoesntHave('adherent')->get();
+        return view('adherents.create-v2', compact('users'));
     }
 
     /**
@@ -60,20 +61,19 @@ class MemberController extends Controller
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'email' => 'required|email|unique:adherent,email',
-            'password' => 'required|string|min:6',
             'telephone' => 'nullable|string|max:20',
-            'adresse' => 'nullable|string',
-            'niveau' => 'required|in:debutant,intermediaire,avance,expert',
-            'date_naissance' => 'nullable|date'
+            'date_adhesion' => 'required|date',
+            'niveau' => 'nullable|in:debutant,intermediaire,avance,competition',
+            'user_id' => 'nullable|exists:users,id',
+            'actif' => 'boolean'
         ]);
 
-        $validated['password'] = bcrypt($validated['password']);
-        $validated['actif'] = true;
+        $validated['actif'] = $request->has('actif') ? 1 : 0;
 
         Adherent::create($validated);
 
         return redirect()->route('adherents.index')
-                        ->with('success', 'Adhérent créé avec succès.');
+                        ->with('success', 'Adhérent inscrit avec succès.');
     }
 
     /**
@@ -91,7 +91,10 @@ class MemberController extends Controller
      */
     public function edit(Adherent $adherent)
     {
-        return view('adherents.edit', compact('adherent'));
+        $users = \App\Models\User::whereDoesntHave('adherent')
+                                 ->orWhere('id', $adherent->user_id)
+                                 ->get();
+        return view('adherents.edit-v2', compact('adherent', 'users'));
     }
 
     /**
@@ -103,24 +106,19 @@ class MemberController extends Controller
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'email' => 'required|email|unique:adherent,email,' . $adherent->id,
-            'password' => 'nullable|string|min:6',
             'telephone' => 'nullable|string|max:20',
-            'adresse' => 'nullable|string',
-            'niveau' => 'required|in:debutant,intermediaire,avance,expert',
-            'date_naissance' => 'nullable|date',
+            'date_adhesion' => 'required|date',
+            'niveau' => 'nullable|in:debutant,intermediaire,avance,competition',
+            'user_id' => 'nullable|exists:users,id',
             'actif' => 'boolean'
         ]);
 
-        if ($validated['password']) {
-            $validated['password'] = bcrypt($validated['password']);
-        } else {
-            unset($validated['password']);
-        }
+        $validated['actif'] = $request->has('actif') ? 1 : 0;
 
         $adherent->update($validated);
 
         return redirect()->route('adherents.index')
-                        ->with('success', 'Adhérent mis à jour avec succès.');
+                        ->with('success', 'Informations de l\'adhérent mises à jour avec succès.');
     }
 
     /**

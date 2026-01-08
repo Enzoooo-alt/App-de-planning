@@ -62,8 +62,14 @@ class SeanceController extends Controller
      */
     public function create()
     {
-        $entrainements = Entrainement::with('entraineur')->get();
-        return view('seances.create', compact('entrainements'));
+        $entrainements = Entrainement::with('entraineur.user')->get();
+        $prochaines_seances = Seance::with('entrainement')
+                                    ->where('date_seance', '>=', now())
+                                    ->orderBy('date_seance')
+                                    ->orderBy('heure_debut')
+                                    ->take(3)
+                                    ->get();
+        return view('seances.create-v2', compact('entrainements', 'prochaines_seances'));
     }
 
     /**
@@ -72,17 +78,18 @@ class SeanceController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'entrainement_id' => 'required|exists:entrainement,id',
             'date_seance' => 'required|date',
+            'lieu' => 'required|string|max:255',
             'heure_debut' => 'required|date_format:H:i',
             'heure_fin' => 'required|date_format:H:i|after:heure_debut',
-            'description' => 'nullable|string',
-            'entrainement_id' => 'required|exists:entrainement,id'
+            'commentaires' => 'nullable|string'
         ]);
 
         Seance::create($validated);
 
         return redirect()->route('seances.index')
-                        ->with('success', 'Séance créée avec succès.');
+                        ->with('success', 'Séance planifiée avec succès.');
     }
 
     /**
@@ -100,8 +107,9 @@ class SeanceController extends Controller
      */
     public function edit(Seance $seance)
     {
-        $entrainements = Entrainement::with('entraineur')->get();
-        return view('seances.edit', compact('seance', 'entrainements'));
+        $seance->load('entrainement.entraineur.user');
+        $entrainements = Entrainement::with('entraineur.user')->get();
+        return view('seances.edit-v2', compact('seance', 'entrainements'));
     }
 
     /**
@@ -110,11 +118,12 @@ class SeanceController extends Controller
     public function update(Request $request, Seance $seance)
     {
         $validated = $request->validate([
+            'entrainement_id' => 'required|exists:entrainement,id',
             'date_seance' => 'required|date',
+            'lieu' => 'required|string|max:255',
             'heure_debut' => 'required|date_format:H:i',
             'heure_fin' => 'required|date_format:H:i|after:heure_debut',
-            'description' => 'nullable|string',
-            'entrainement_id' => 'required|exists:entrainement,id'
+            'commentaires' => 'nullable|string'
         ]);
 
         $seance->update($validated);

@@ -64,8 +64,8 @@ class EntrainementController extends Controller
      */
     public function create()
     {
-        $entraineurs = Entraineur::all();
-        return view('entrainements.create', compact('entraineurs'));
+        $entraineurs = Entraineur::with('user')->get();
+        return view('entrainements.create-v2', compact('entraineurs'));
     }
 
     /**
@@ -81,14 +81,16 @@ class EntrainementController extends Controller
     {
         $validated = $request->validate([
             'titre' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'entraineur_id' => 'required|exists:entraineur,id'
+            'entraineur_id' => 'required|exists:entraineur,id',
+            'niveau' => 'nullable|in:debutant,intermediaire,avance,competition',
+            'description' => 'required|string',
+            'objectifs' => 'nullable|string'
         ]);
 
         Entrainement::create($validated);
 
         return redirect()->route('entrainements.index')
-                        ->with('success', 'Entraînement créé avec succès.');
+                        ->with('success', 'Programme d\'entraînement créé avec succès.');
     }
 
     /**
@@ -118,8 +120,9 @@ class EntrainementController extends Controller
      */
     public function edit(Entrainement $entrainement)
     {
-        $entraineurs = Entraineur::all();
-        return view('entrainements.edit', compact('entrainement', 'entraineurs'));
+        $entrainement->loadCount(['seances', 'commentaires']);
+        $entraineurs = Entraineur::with('user')->get();
+        return view('entrainements.edit-v2', compact('entrainement', 'entraineurs'));
     }
 
     /**
@@ -136,14 +139,16 @@ class EntrainementController extends Controller
     {
         $validated = $request->validate([
             'titre' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'entraineur_id' => 'required|exists:entraineur,id'
+            'entraineur_id' => 'required|exists:entraineur,id',
+            'niveau' => 'nullable|in:debutant,intermediaire,avance,competition',
+            'description' => 'required|string',
+            'objectifs' => 'nullable|string'
         ]);
 
         $entrainement->update($validated);
 
         return redirect()->route('entrainements.index')
-                        ->with('success', 'Entraînement mis à jour avec succès.');
+                        ->with('success', 'Programme d\'entraînement mis à jour avec succès.');
     }
 
     /**
