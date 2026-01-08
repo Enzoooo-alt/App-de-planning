@@ -38,7 +38,7 @@ class Adherent extends Model
     protected $table = 'adherent';
     
     protected $fillable = [
-        'nom', 'prenom', 'email', 'password', 'telephone', 'adresse', 'niveau', 'actif', 'date_naissance'
+        'nom', 'prenom', 'email', 'password', 'telephone', 'adresse', 'niveau', 'actif', 'date_naissance', 'date_adhesion', 'user_id'
     ];
 
     protected $hidden = [
@@ -47,9 +47,20 @@ class Adherent extends Model
 
     protected $casts = [
         'date_naissance' => 'date',
+        'date_adhesion' => 'date',
         'actif' => 'boolean',
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Relation avec le compte utilisateur associé (optionnel)
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Relation avec les commentaires de cet adhérent

@@ -34,7 +34,7 @@ class Seance extends Model
     protected $table = 'seance';
     
     protected $fillable = [
-        'date_seance', 'heure_debut', 'heure_fin', 'description', 'entrainement_id'
+        'date_seance', 'lieu', 'heure_debut', 'heure_fin', 'commentaires', 'entrainement_id'
     ];
 
     protected $casts = [

@@ -31,7 +31,7 @@ class Entrainement extends Model
     protected $table = 'entrainement';
     
     protected $fillable = [
-        'titre', 'description', 'entraineur_id'
+        'titre', 'description', 'entraineur_id', 'niveau', 'objectifs'
     ];
 
     /**

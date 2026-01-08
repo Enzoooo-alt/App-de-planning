@@ -88,6 +88,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Relation avec le profil adhérent de l'utilisateur (optionnel)
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function adherent()
+    {
+        return $this->hasOne(Adherent::class);
+    }
+
+    /**
      * Vérifie si l'utilisateur possède un rôle spécifique
      * 
      * Méthode utilitaire pour contrôler les permissions et l'accès
