@@ -48,63 +48,29 @@ class DashboardController extends Controller
         $stats = [
             'total_seances' => Seance::count(),
             'total_entrainements' => Entrainement::count(),
-            'seances_ce_mois' => Seance::whereMonth('date_seance', now()->month)
+            'seances_mois' => Seance::whereMonth('date_seance', now()->month)
                                      ->whereYear('date_seance', now()->year)
                                      ->count(),
+            'total_adherents' => User::count(),
+            'total_entraineurs' => Entraineur::count(),
         ];
 
-        // Ajout de données spécifiques selon le rôle
+        // Ajout de données spécifiques selon le rôle - Utilisation des vues v2
         switch ($userRole) {
             case 'president':
+                $data = $this->getPresidentData();
+                return view('dashboard.president-v2', compact('data', 'stats'));
             case 'responsable_planning':
-                // Accès complet aux statistiques administratives
-                $stats = array_merge($stats, [
-                    'total_membres' => User::count(),
-                    'total_entraineurs' => Entraineur::count(),
-                ]);
-                break;
-                
+                $data = $this->getResponsablePlanningData();
+                return view('dashboard.responsable-planning-v2', compact('data', 'stats'));
             case 'entraineur':
-                // Statistiques personnelles de l'entraîneur
-                $entraineur = Entraineur::where('user_id', $user->id)->first();
-                if ($entraineur) {
-                    $stats['mes_entrainements'] = $entraineur->entrainements()->count();
-                    $stats['mes_seances'] = Seance::whereHas('entrainement.entraineur', function($q) use ($user) {
-                        $q->where('user_id', $user->id);
-                    })->count();
-                }
-                break;
-                
-            default: // membre
-                // Statistiques limitées pour les membres
-                $stats['mes_seances'] = 0; // À implémenter : séances auxquelles il participe
-                $stats['mes_entrainements'] = 0; // À implémenter : programmes suivis
-                break;
+                $data = $this->getEntraineurData($user);
+                return view('dashboard.entraineur-v2', compact('data', 'stats'));
+            case 'membre':
+            default:
+                $data = $this->getMembreData($user);
+                return view('dashboard.membre-v2', compact('data', 'stats'));
         }
-
-        // Données spécifiques selon le rôle de l'utilisateur connecté
-        $roleSpecificData = [];
-        
-        if ($user && $user->role) {
-            // Détermination des données à afficher selon le rôle
-            switch ($user->role->nom_role) {
-                case 'president':
-                    $roleSpecificData = $this->getPresidentData();
-                    break;
-                case 'responsable_planning':
-                    $roleSpecificData = $this->getResponsablePlanningData();
-                    break;
-                case 'entraineur':
-                    $roleSpecificData = $this->getEntraineurData($user);
-                    break;
-                case 'membre':
-                default:
-                    $roleSpecificData = $this->getMembreData($user);
-                    break;
-            }
-        }
-
-        return view('dashboard', compact('stats', 'roleSpecificData', 'user'));
     }
 
     /**
@@ -115,17 +81,86 @@ class DashboardController extends Controller
      * 
      * @return array Données pour le tableau de bord président
      */
+    /**
+     * Récupère les données spécifiques au tableau de bord président
+     * 
+     * Affiche une vue d'ensemble complète du club incluant les statistiques globales,
+     * les activités récentes et la répartition des membres par rôle.
+     * 
+     * @return array Données pour le tableau de bord président
+     */
     private function getPresidentData()
     {
         return [
-            'recent_activities' => [
-                'nouveaux_membres_semaine' => User::where('created_at', '>=', now()->subWeek())->count(),
-                'entrainements_actifs' => Entrainement::whereHas('seances', function($query) {
-                    $query->where('date_seance', '>=', now());
-                })->count(),
-            ],
+            'recent_activities' => $this->getRecentActivities(),
             'members_by_role' => Role::withCount('users')->get(),
+            'total_adherents' => User::count(),
+            'total_entraineurs' => Entraineur::count(),
+            'seances_mois' => Seance::whereMonth('date_seance', now()->month)
+                                   ->whereYear('date_seance', now()->year)
+                                   ->count(),
+            'total_entrainements' => Entrainement::count(),
         ];
+    }
+
+    /**
+     * Récupère les activités récentes du club
+     * 
+     * @return array Liste des activités récentes avec type, titre et date
+     */
+    private function getRecentActivities()
+    {
+        $activities = [];
+        
+        // Nouvelles inscriptions
+        $newMembers = User::where('created_at', '>=', now()->subWeek())
+            ->orderBy('created_at', 'desc')
+            ->take(2)
+            ->get();
+        
+        foreach ($newMembers as $member) {
+            $activities[] = [
+                'type' => 'adherent',
+                'title' => 'Nouveau membre: ' . $member->name,
+                'date' => $member->created_at->diffForHumans(),
+            ];
+        }
+        
+        // Séances récemment créées
+        $newSeances = Seance::where('created_at', '>=', now()->subWeek())
+            ->with('entrainement')
+            ->orderBy('created_at', 'desc')
+            ->take(2)
+            ->get();
+        
+        foreach ($newSeances as $seance) {
+            $activities[] = [
+                'type' => 'seance',
+                'title' => 'Séance planifiée: ' . ($seance->entrainement->titre ?? 'N/A'),
+                'date' => $seance->created_at->diffForHumans(),
+            ];
+        }
+        
+        // Nouveaux entraînements
+        $newEntrainements = Entrainement::where('created_at', '>=', now()->subWeek())
+            ->orderBy('created_at', 'desc')
+            ->take(2)
+            ->get();
+        
+        foreach ($newEntrainements as $entrainement) {
+            $activities[] = [
+                'type' => 'entrainement',
+                'title' => 'Programme créé: ' . $entrainement->titre,
+                'date' => $entrainement->created_at->diffForHumans(),
+            ];
+        }
+        
+        // Tri par date (plus récent en premier)
+        usort($activities, function($a, $b) {
+            return strtotime($b['date']) - strtotime($a['date']);
+        });
+        
+        return array_slice($activities, 0, 6);
     }
 
     /**
