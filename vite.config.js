@@ -5,7 +5,12 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/js/app.js', 'resources/css/app.css', 'resources/css/lyon-palme.css'],
+            input: [
+                'resources/js/app.js', 
+                'resources/css/app.css', 
+                'resources/css/lyon-palme.css',
+                'resources/css/lyon-palme-v2.css'
+            ],
             refresh: true,
         }),
         vue({

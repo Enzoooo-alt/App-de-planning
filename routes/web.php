@@ -10,8 +10,13 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome-v2');
 });
+
+// Ancienne version (backup)
+Route::get('/welcome-old', function () {
+    return view('welcome');
+})->name('welcome.old');
 
 // Route de démonstration du Design System Maritime
 Route::get('/demo-maritime', function () {
