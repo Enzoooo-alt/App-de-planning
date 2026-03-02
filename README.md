@@ -139,7 +139,8 @@ Fichiers de configuration Laravel :
    ```bash
    php artisan migrate
    ```
-
+   Les tables doivent etre dans le bonne ordre 
+   
 7. **Optionnel : Peupler avec des données de test**
    ```bash
    php artisan db:seed --class=LyonPalmeSeeder
